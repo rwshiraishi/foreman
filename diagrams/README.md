@@ -27,3 +27,15 @@ the stamp and CI will fail.
   supply fills; mark semantics with stroke or dash instead.
 - **CI compares hashes, never re-renders.** PNG bytes are not reproducible
   across machines.
+
+## Verifying sync
+
+`.stamp` hashes the source, config, and both PNGs together. To check that the
+committed PNGs match the committed source:
+
+```bash
+[ "$(cat diagrams/.stamp)" = "$(bash diagrams/stamp.sh)" ] && echo in-sync || echo STALE
+```
+
+A CI job can run exactly that comparison. It must never re-render for a byte
+comparison — PNG output is not byte-deterministic across machines.
