@@ -6,33 +6,23 @@ The result is a run that costs a fraction of an all-frontier build and catches d
 
 Every report routes to the boss. Nothing is declared done by the agent that did the work.
 
-```
-                    ┌──────────────────────────────────────────┐
-      task cards    │  BOSS  (frontier tier)                   │   claims · blockers
-      amendments  ┌─┤  spec · constitution · adjudication       ├─┐ verdicts · findings
-      retry       │ │  never writes implementation code         │ │ disputes
-      feedback    │ │  the only role that declares DONE         │ │
-                  │ └──────────────────────────────────────────┘ │
-                  ▼                                              │
-        ┌─────────────────┐                                      │
-        │  WORKERS        │ ── claim (a claim, not a fact) ──┐    │
-        │  cheap tier     │                                  │    │
-        │  one card each  │                                  ▼    │
-        └─────────────────┘                        ┌─────────────────┐
-                  ▲                                │  CHECKERS       │
-                  └── retry w/ specific feedback ──┤  run the build  │
-                         (routed by the boss)      │  drive the UI   │
-                                                   │  1 per task     │
-                                                   └─────────────────┘
-                  ┌─────────────────┐                       │
-                  │  SKEPTIC        │  findings ────────────┘ all PASS
-                  │  attacks the    │  ▲  (boss spawns the skeptic,
-                  │  assembled whole│──┘   adjudicates, may reopen a
-                  │  1 per round    │      task loop, then re-runs it)
-                  └─────────────────┘
+```mermaid
+flowchart TD
+    BOSS["BOSS — frontier tier<br/>spec · constitution · adjudication<br/>never implements<br/>the only role that declares DONE"]
+    W["WORKERS — cheap tier<br/>one task card each"]
+    C["CHECKERS<br/>run the build, drive the UI<br/>one per task"]
+    S["SKEPTIC<br/>attacks the assembled build<br/>one per round"]
+
+    BOSS -- "task cards" --> W
+    W -- "claims, blockers" --> BOSS
+    BOSS -- "card + claim" --> C
+    C -- "verdicts" --> BOSS
+    BOSS -- "retry + feedback" --> W
+    BOSS -- "spawn on all PASS" --> S
+    S -- "findings" --> BOSS
 ```
 
-Workers never message each other. Checkers never message workers. The skeptic reports to the boss and only to the boss — it cannot dispatch its own fixes, and it cannot end the run.
+Every arrow ends at the boss. Workers never message each other, checkers never message workers, and the skeptic reports to the boss alone — it cannot dispatch its own fixes and it cannot end the run.
 
 ## Why this exists
 
