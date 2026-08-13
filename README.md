@@ -6,20 +6,10 @@ The result is a run that costs a fraction of an all-frontier build and catches d
 
 Every report routes to the boss. Nothing is declared done by the agent that did the work.
 
-```mermaid
-flowchart TD
-    BOSS["BOSS — frontier tier<br/>spec · constitution · adjudication<br/>never implements<br/>the only role that declares DONE"]
-    W["WORKERS — cheap tier<br/>one task card each"]
-    C["CHECKERS<br/>run the build, drive the UI<br/>one per task"]
-    S["SKEPTIC<br/>attacks the assembled build<br/>one per round"]
-
-    BOSS -- "task cards<br/>retry feedback" --> W
-    W -- "claims<br/>blockers" --> BOSS
-    BOSS -- "card + claim" --> C
-    C -- "verdicts" --> BOSS
-    BOSS -- "spawn on<br/>all PASS" --> S
-    S -- "findings" --> BOSS
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="diagrams/orgchart-dark.png">
+  <img alt="Boss at the top sends task cards and retries to workers and card-plus-claim to checkers, and spawns the skeptic once all tasks pass. Workers send claims, checkers send verdicts, and the skeptic sends findings — all back to the boss." src="diagrams/orgchart-light.png" width="820">
+</picture>
 
 Every arrow ends at the boss. Workers never message each other, checkers never message workers, and the skeptic reports to the boss alone — it cannot dispatch its own fixes and it cannot end the run.
 

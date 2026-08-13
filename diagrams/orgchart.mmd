@@ -1,0 +1,12 @@
+flowchart TD
+    BOSS["BOSS — frontier tier<br/>spec · constitution · adjudication<br/>never implements<br/>the only role that declares DONE"]
+    W["WORKERS — cheap tier<br/>one task card each"]
+    C["CHECKERS<br/>run the build, drive the UI<br/>one per task"]
+    S["SKEPTIC<br/>attacks the assembled build<br/>one per round"]
+
+    BOSS -- "cards and retries" --> W
+    W -- "claims" --> BOSS
+    BOSS -- "card plus claim" --> C
+    C -- "verdicts" --> BOSS
+    BOSS -- "on all PASS" --> S
+    S -- "findings" --> BOSS

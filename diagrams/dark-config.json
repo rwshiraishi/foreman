@@ -1,0 +1,11 @@
+{
+  "theme": "dark",
+  "themeVariables": {
+    "fontFamily": "arial",
+    "edgeLabelBackground": "#22272e",
+    "textColor": "#e6edf3",
+    "labelTextColor": "#e6edf3",
+    "tertiaryTextColor": "#e6edf3",
+    "lineColor": "#8b949e"
+  }
+}
