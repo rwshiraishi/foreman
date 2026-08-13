@@ -13,12 +13,11 @@ flowchart TD
     C["CHECKERS<br/>run the build, drive the UI<br/>one per task"]
     S["SKEPTIC<br/>attacks the assembled build<br/>one per round"]
 
-    BOSS -- "task cards" --> W
-    W -- "claims, blockers" --> BOSS
+    BOSS -- "task cards<br/>retry feedback" --> W
+    W -- "claims<br/>blockers" --> BOSS
     BOSS -- "card + claim" --> C
     C -- "verdicts" --> BOSS
-    BOSS -- "retry + feedback" --> W
-    BOSS -- "spawn on all PASS" --> S
+    BOSS -- "spawn on<br/>all PASS" --> S
     S -- "findings" --> BOSS
 ```
 
