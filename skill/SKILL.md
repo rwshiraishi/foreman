@@ -55,7 +55,7 @@ Operationally:
 
 **Workers** (ECONOMY/STANDARD per §3). Each receives exactly one task card (§6) + the constitution. A worker's "done" is a **claim**, never a fact.
 
-**Skeptic** (STANDARD or FRONTIER; exactly one per run). Spawned after all tasks pass their checkers, before the boss declares done. Its brief is pure refutation: assume the build is broken and prove it — attack the assembled whole (integration seams between tasks, the gaming patterns in §9, constitution clauses nobody's checker owned, the checks themselves). It gets the constitution and the checkers' verdicts, and is scored on finding real breaks, not on agreeing. A skeptic finding reopens the relevant task's loop (§7); a run where the skeptic found nothing after genuinely executing attacks is done. Distinct from checkers: checkers verify one task's done-condition; the skeptic hunts what no single done-condition covers.
+**Skeptic** (STANDARD or FRONTIER; exactly one per run). Spawned after all tasks pass their checkers, before the boss declares done. Its brief is pure refutation: assume the build is broken and prove it — attack the assembled whole (integration seams between tasks, the gaming patterns in §9, constitution clauses nobody's checker owned, the checks themselves). It gets the constitution and the checkers' verdicts, and is scored on finding real breaks, not on agreeing. **It reports to the boss and only to the boss** — it never messages workers, never dispatches fixes, and never declares the run done itself. The boss adjudicates each finding (a skeptic can be wrong too; the §7 dispute path and rubric-amendment rule apply to its findings exactly as to a checker's), then routes accepted findings into the owning task's loop as feedback. Findings the boss rejects are recorded with the reason, not silently dropped. Distinct from checkers: checkers verify one task's done-condition; the skeptic hunts what no single done-condition covers.
 
 **Checkers** (independent, decorrelated). Decorrelation ladder: prefer **CROSS-TIER** (a different Claude band via the model override), fall back to **SAME-MODEL** and label it honestly in the run log. Checkers **execute**:
 - Code: run the build, run the tests, run the linter — read exit codes, not diffs.
@@ -94,7 +94,7 @@ Per task: worker → checker executes → **PASS** (evidence attached) or **FAIL
 
 **Stop condition**: 3 boss arbitrations on the same task → stop and surface to the user with both sides. Never loop past that.
 
-**Final gate**: when every task has PASSed, the skeptic (§4) runs against the assembled build. Skeptic findings reopen the affected task loops with the finding as checker feedback; a clean skeptic pass (with executed attacks logged) is the run's done signal.
+**Final gate**: when every task has PASSed, the skeptic (§4) runs against the assembled build and reports to the boss. The boss adjudicates, routes accepted findings into the owning task's loop as feedback, and re-runs the skeptic on the fixed build — briefing it on what changed and on any new risk the fix introduces (a guard added to stop one failure is a prime suspect for swallowing a legitimate case). Re-runs also re-verify that the fix's own tests actually fail against deliberately broken code, or the coverage is a mirage. Only the boss declares done, and only on a skeptic pass with executed attacks logged.
 
 ## 8. Cost accounting
 

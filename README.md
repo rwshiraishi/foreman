@@ -4,27 +4,35 @@
 
 The result is a run that costs a fraction of an all-frontier build and catches defects that self-review never finds.
 
+Every report routes to the boss. Nothing is declared done by the agent that did the work.
+
 ```
-        ┌─────────────────────────────────────────┐
-        │  BOSS  (frontier model)                 │
-        │  spec · constitution · arbitration      │
-        │  never writes implementation code       │
-        └───────┬──────────────────────▲──────────┘
-     task cards │                      │ claims, questions, disputes
-                ▼                      │
-        ┌───────────────┐      ┌───────────────┐
-        │  WORKERS      │─────▶│  CHECKERS     │
-        │  cheap tier   │ claim│  execute the  │
-        │  one task ea. │◀─────│  verification │
-        └───────────────┘ FAIL └───────────────┘
-                                       │ all PASS
-                                       ▼
-                              ┌───────────────┐
-                              │  SKEPTIC      │
-                              │  attacks the  │
-                              │  whole build  │
-                              └───────────────┘
+                    ┌──────────────────────────────────────────┐
+      task cards    │  BOSS  (frontier tier)                   │   claims · blockers
+      amendments  ┌─┤  spec · constitution · adjudication       ├─┐ verdicts · findings
+      retry       │ │  never writes implementation code         │ │ disputes
+      feedback    │ │  the only role that declares DONE         │ │
+                  │ └──────────────────────────────────────────┘ │
+                  ▼                                              │
+        ┌─────────────────┐                                      │
+        │  WORKERS        │ ── claim (a claim, not a fact) ──┐    │
+        │  cheap tier     │                                  │    │
+        │  one card each  │                                  ▼    │
+        └─────────────────┘                        ┌─────────────────┐
+                  ▲                                │  CHECKERS       │
+                  └── retry w/ specific feedback ──┤  run the build  │
+                         (routed by the boss)      │  drive the UI   │
+                                                   │  1 per task     │
+                                                   └─────────────────┘
+                  ┌─────────────────┐                       │
+                  │  SKEPTIC        │  findings ────────────┘ all PASS
+                  │  attacks the    │  ▲  (boss spawns the skeptic,
+                  │  assembled whole│──┘   adjudicates, may reopen a
+                  │  1 per round    │      task loop, then re-runs it)
+                  └─────────────────┘
 ```
+
+Workers never message each other. Checkers never message workers. The skeptic reports to the boss and only to the boss — it cannot dispatch its own fixes, and it cannot end the run.
 
 ## Why this exists
 

@@ -61,7 +61,18 @@ Agent { subagent_type: "general-purpose", model: "sonnet", name: "skeptic",
         SendMessage to 'main': {\"verdict\":\"CLEAN|BROKEN\",\"attacks_run\":[...],\"findings\":[{\"task\":n,\"break\":\"...\",\"repro\":\"...\"}]}" }
 ```
 
-Findings reopen the affected task's loop (finding = checker feedback). CLEAN with logged attacks = done.
+The skeptic reports to 'main' only — it never messages workers and never dispatches its own fixes. The boss adjudicates each finding (skeptics can be wrong; dispute/amendment rules apply), routes accepted ones into the owning task's loop as feedback, and records rejected ones with the reason.
+
+Re-run brief after a fix (always re-run; never accept a fix on the worker's word):
+
+```
+SendMessage skeptic: "Re-attack. Changed: <what the worker changed>. Attack priorities:
+(1) re-verify the original finding by execution; (2) NEW RISK — the fix added <guard/flag>:
+hunt an input path where it swallows a legitimate case (worse than the bug it replaced → CRITICAL);
+(3) verify the new tests aren't a mirage — sabotage a scratch copy of the source and confirm the
+suite actually goes red; (4) regressions in what previously passed; (5) any constitution amendment
+ratified this round, verified by execution."
+```
 
 ## Workflow tool (5+ tasks, retries, budget)
 
