@@ -102,11 +102,21 @@ skill/
     call-shapes.md                  copy-paste dispatch: task cards, workers, checkers, skeptic, comms
     constitution-template.md        the done-right standard, with a worked example
     model-intel.md                  model → band/price/strengths, date-stamped and refreshable
+    lessons.md                      the run ledger: promoted rules, candidates, open questions
+    run-retro.md                    mandatory post-run retro protocol and self-edit guardrails
 commands/
   model-route.md                    optional Claude Code slash command front door
 adapters/
   codex-foreman.md                  Codex CLI prompt adaptation
 ```
+
+## The skill maintains itself
+
+Foreman treats its own doctrine the way it treats a build: evidence, execution, amendment. Every run ends with a mandatory retro. Lessons live in `skill/references/lessons.md` with a lifecycle: seen once is a CANDIDATE, confirmed twice (or once with an airtight causal chain) gets promoted into the skill files with a date stamp, contradicted later gets demoted with the counter-evidence recorded. Nothing is silently deleted, and open questions stay listed as UNANSWERED until a controlled run settles them.
+
+The boss reads the ledger before writing any spec, applies documented fixes mid-run the moment a known symptom appears, and writes the run section after the cost table. Guardrails stop the loop from eating itself: verification and safety rules can only tighten, every new rule must cite the run that earned it, new checks ship negative-tested, and the files have hard size caps.
+
+The first field run already paid in. Three of five agents died of context exhaustion because their task cards pointed at large files instead of carrying inline extracts. That produced the context-budget rule (the boss extracts the relevant 20 to 50 lines into the card; workers read at most 2 files), the build-scoping rule (workers verify one test file plus a typecheck; only the boss runs the full build, once, because concurrent builds in one tree corrupt artifacts), and the metric that judges a run by delivered artifacts per token rather than agents spawned.
 
 ## Design notes
 

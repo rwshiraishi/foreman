@@ -7,7 +7,10 @@ Copy-paste dispatch patterns. Bands resolve to models via model-intel.md at run 
 ```
 TASK CARD #<n>
 Objective: <one sentence>
-Inputs: <exact file paths> | Spec excerpt: <relevant lines only>
+Inputs: <INLINE EXTRACTS — the relevant 20-50 lines pasted in, not paths to big files.
+        Reading list ≤2 files + constitution. Same card size for every band.>
+Verify yourself with: <narrow scope only, e.g. `vitest run <file>` + `tsc --noEmit`.
+        NEVER run the full build — the boss runs it once after all workers finish.>
 Done-condition: <testable statement from the spec>
 Will be verified by: <exact command/action the checker runs>
 Output (return exactly this JSON): {"status": "done|blocked", "evidence": ["..."], "files_touched": ["..."]}

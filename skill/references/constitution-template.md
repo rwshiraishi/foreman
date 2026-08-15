@@ -26,9 +26,12 @@ One page, written by the boss before any dispatch. Every worker and checker prom
 - Disabling or skipping a check to pass it
 
 ## Verification commands by task type
-- Code task: <build + test + lint commands; checker reads exit codes>
+- Worker/checker scope (per task): <single-file test command, e.g. `vitest run <file>`> + <typecheck, e.g. `tsc --noEmit`>
+  — NEVER the full build; concurrent full builds in one working tree corrupt artifacts and produce false FAILs
+- Boss scope (once, after all tasks pass): <full build command> + <lint>
 - Page task: <render/fetch command; both themes; key routes>
-- Content task: <character-compare against protected-content list>
+- Content task: <character-compare against protected-content list; content-inventory diff
+  (set of titles/sections before vs after) to prove a restyle dropped nothing>
 
 ## Amendments
 - <date>: <rubric change from arbitration, with reason>
