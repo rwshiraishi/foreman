@@ -1,58 +1,72 @@
-# Lessons ledger (living document)
+# Lessons ledger — index
 
-Lifecycle and promotion rules: `run-retro.md`. Read this BEFORE writing any spec.
-Statuses: CANDIDATE → PROMOTED (or DEMOTED). UNANSWERED questions listed at bottom.
+**Read this before writing any spec.** Context deaths are this skill's most expensive
+failure mode — L1, L17, L18 and L41 all guard that one class; see `context-budget.md`.
 
-## L1 — boss-extracts-inline-inputs — PROMOTED
-- **Rule**: The boss puts the relevant 20-50 lines IN the task card; workers never
-  read large sources. Reading list ≤2 files + constitution.
-- **Evidence**: Run 1 (2026-08-14, marketing page port): 3 of 3 deaths were
-  autocompact thrash, all three cards listed 8-10 files; both survivors had ~3-file
-  cards. Airtight causal chain (identical failure reason, self-reported).
-- **Landed-in**: SKILL.md §6 "Context budget"; call-shapes.md task card.
+**Read this before writing any spec.** One line of law per lesson. Full evidence,
+mechanisms and negative tests: `lessons-evidence.md` (read only when judging a
+promotion/demotion). Boss-side rules in operational form: `boss-discipline.md`.
+Lifecycle and promotion rules: `run-retro.md`.
 
-## L2 — no-concurrent-full-builds — PROMOTED
-- **Rule**: Worker/checker verification is single-file test + typecheck only; the
-  full build is boss-only, once, after all workers finish (or per-worker worktrees).
-- **Evidence**: Run 1: two concurrent `pnpm run build` corrupted `.next`
-  (`ENOENT .nft.json`), producing false FAILs misdiagnosed as disk failure.
-- **Landed-in**: SKILL.md §6 "Verification scope"; constitution-template.md
-  verification commands; call-shapes.md task card.
+Statuses: CANDIDATE (seen once, apply opportunistically) → PROMOTED (law) / DEMOTED.
+Never reuse an ID. Never silently delete an entry.
 
-## L3 — card-size-constant-across-bands — PROMOTED
-- **Rule**: Task card size must not vary with model band; coupling them makes the
-  run uninterpretable.
-- **Evidence**: Run 1 confound: "harder" tasks got both higher band AND longer
-  reading list, so band reliability could not be judged.
-- **Landed-in**: SKILL.md §6 "Context budget".
-
-## L4 — filesystem-is-the-report — PROMOTED
-- **Rule**: Assume the report may never arrive; verify work via `git status` /
-  expected outputs. Withhold root-cause judgment until the idle notification lands.
-- **Evidence**: Run 1: dead agents left no transcript, ignored pings; real cause
-  arrived late via idle notifications after a wrong disk-failure diagnosis.
-- **Landed-in**: SKILL.md §6 comms contract; §9 silent-agent row.
-
-## L5 — artifacts-per-token-metric — PROMOTED
-- **Rule**: Judge runs by delivered artifacts per token, not agents spawned.
-- **Evidence**: Run 1: 3 dead STANDARD agents dominated spend; 2 ECONOMY workers
-  delivered everything.
-- **Landed-in**: SKILL.md §8.
-
-## L6 — content-inventory-diff — PROMOTED
-- **Rule**: For restyle/port tasks, diff the content inventory (titles/sections)
-  before vs after — cheap, high-signal proof nothing was dropped.
-- **Evidence**: Run 1 "what worked".
-- **Landed-in**: constitution-template.md content-task verification.
-
-## L7 — economy-tier-does-real-work — CANDIDATE
-- **Rule (provisional)**: ECONOMY (haiku) handles full page builds with substantive
-  tests when the card is well-extracted; don't reflexively band-up page work.
-- **Evidence**: Run 1: both haiku workers passed with real assertions. Only one
-  run; entangled with the L3 confound (they also had the small cards).
-- **Needs**: one more run with constant card sizes.
+| ID | Status | Rule | Landed in |
+|---|---|---|---|
+| L1 | PROMOTED | Boss puts the relevant 20-50 lines IN the card; workers never read large sources. Reading list ≤2 files + constitution. | SKILL §6, call-shapes |
+| L2 | PROMOTED | Worker verification = single-file test + typecheck. Full build is boss-only, once, after all workers finish. | SKILL §6, constitution |
+| L3 | PROMOTED | Card size must not vary with band, or the run is uninterpretable. | SKILL §6 |
+| L4 | PROMOTED | Assume the report never arrives; verify via `git status` / expected outputs. Withhold root-cause judgment until the idle notification lands. | SKILL §6, §9 |
+| L4b | PROMOTED | An empty tree means NOT DONE — not that the agent died, not that work was lost. Record the target's hash + mtime in the takeover note. | SKILL §9 |
+| L5 | PROMOTED | Judge runs by delivered artifacts per token, not agents spawned. | SKILL §8 |
+| L6 | PROMOTED | For restyle/port tasks, diff the content inventory before vs after. | constitution |
+| L7 | CANDIDATE | ECONOMY does substantive work when the card is well-extracted; don't reflexively band-up. Still confounded (see U1). | — |
+| L8 | PROMOTED | Falsify the suite before trusting it: run it against a deliberately wrong implementation. A property the SUBJECT re-establishes can only be falsified from OUTSIDE it. | SKILL §4 |
+| L9 | PROMOTED | Every check declares what it must have examined and FAILS at zero, independently of exit code. Exit 0 = "no violation reported", never "no violation exists". | SKILL §4, §9 |
+| L10 | PROMOTED | A tightened check's false positives are evidence about the OLD check before they are noise about the new one. | SKILL §7 |
+| L11 | PROMOTED | A step that has never RUN is not passing. Fail-fast hides the tail; the steps furthest from step 1 are likeliest broken. | SKILL §9 |
+| L12 | PROMOTED | Restore-proof is a CONTENT HASH, never `git diff` — which is empty by construction for untracked files. | SKILL §4 |
+| L13 | PROMOTED | Prove the mutation LANDED before trusting the result. A never-applied mutant is indistinguishable from a survived one. | SKILL §4 |
+| L14 | PROMOTED | Freeze the tree while a skeptic runs, or give it a worktree pinned to the commit under test. | SKILL §7 |
+| L15 | CANDIDATE | Run `git log origin/main..HEAD` and `git status --short` before composing your commit — workers commit despite the prohibition. | — |
+| L16 | PROMOTED | When output embeds a discriminator that already differs, assert the computed part BY VALUE. Mutate the computation, preserve the format. | SKILL §4 |
+| L17 | PROMOTED | One capability per card. When the acceptance oracle needs non-trivial env setup, the BOSS writes the harness; the worker's card is "make these tests pass". | SKILL §6, context-budget |
+| L18 | PROMOTED | Output redirection is the FIRST line of every card. L1 caps what a worker READS; this caps what its COMMANDS EMIT — the larger channel. | SKILL §6, context-budget, call-shapes |
+| L19 | CANDIDATE | A checker on a JOIN/lookup must prove it returns the RIGHT row, not merely a complete one. Construct the two-plausible-answers case. | — |
+| L20 | PROMOTED | **Co-authored-fixture trap.** Allow-fixtures are GENERATED by the exact tool the exit criterion invokes, in the exact mode; deny-cases mutate one field of a real fixture. Checkers execute against inputs the worker did not author. | SKILL §4 |
+| L21 | PROMOTED | The card's "Will be verified by" line quotes the goal's exit command character for character. Never paraphrase. | SKILL §6, call-shapes |
+| L22 | PROMOTED | A `blocked` report gets the same review as a `done` report, scoped to the step the dependency touches. When the blocker is on VERIFICATION, stop accepting fixes to that file. | SKILL §7 |
+| L23 | PROMOTED | A pasted command output is a claim. The boss re-runs anything that gates a merge — and never names the output it expects to see. | SKILL §7, boss-disc §3 |
+| L24 | PROMOTED | Execute a correction against a real substrate BEFORE sending it. On a guardrail file, STRUCTURE is part of the spec. | boss-disc §1 |
+| L25 | PROMOTED | Never `git add -A` while agents are live. `.gitignore` tool caches before running the tool. | boss-disc §2 |
+| L26 | PROMOTED | Clean up every resource you start. Keep an agent roster, reconcile every round. "Blocked on the environment" may be a fact about the orchestrator — check it. | boss-disc §4, §5 |
+| L27 | PROMOTED | Brief the skeptic to attack BY CONSTRUCTION and to audit the suite's coverage. Treat "the check is a grep/regex/LIKE" as a defect smell in itself. | SKILL §4, §7 |
+| L28 | CANDIDATE | Toolchain preflight before dispatch; start both paths when a capability has two of very different sizes; verify the binary, not the installer's exit code. | boss-disc §9 |
+| L29 | PROMOTED | The card's test list is the coverage ceiling — a worker will not invent the case you omitted. Review enumerations for completeness before dispatch. | SKILL §6, boss-disc §16 |
+| L30 | CANDIDATE | Card pattern: frame inherited code as suspect, name bug-finding as the deliverable, require the report to say where it looked and found NOTHING. | call-shapes |
+| L31 | PROMOTED | Re-task a blocked agent to measure the blocking question. Turn the argument into a decision. | boss-disc §15 |
+| L32 | PROMOTED | One fact in two artifacts: a fix applied to one is NOT applied. Verify through the path production uses; that agreement needs its own check. | boss-disc §11 |
+| L33 | PROMOTED | Commit the observation, never the attribution. Remove contention by design (boss-owned shared files), not by coordination discipline. | boss-disc §7 |
+| L34 | PROMOTED | Record what you did and what happened, never what you concluded exists. Fixtures carry URL + date + checksum. | boss-disc §12 |
+| L35 | PROMOTED | Safety exceptions are scoped to named paths, never a glob class. "Tests are exempt" is always too broad. | SKILL §9 |
+| L36 | PROMOTED | For any reversible operation, assert STATE on both sides, never the exit code of the reversal. | SKILL §4 |
+| L37 | PROMOTED | Guardrails can be mutually unsatisfiable. BLOCKED is the correct output; the boss arbitrates by amendment, never by the convenient reading. | SKILL §7 |
+| L38 | CANDIDATE | Check a large blocked finding-count for homogeneity — a blocker and a backlog inside one number make both unactionable. | — |
+| L39 | PROMOTED | A text match cannot tell code from prose ABOUT code. Scope to executable positions. Fixture identifiers must not be substrings of one another. | SKILL §9 |
+| L40 | PROMOTED | The ledger is committed at run close. An uncommitted promotion is a lesson learned and thrown away. | SKILL §10, run-retro |
+| L41 | CANDIDATE | Retry 2+ respawns FRESH with a boss-rewritten card, rather than appending feedback to a transcript already holding the failed attempt. INFERRED, not observed. | context-budget |
+| L42 | CANDIDATE | A build shipping `.github/workflows/*` fails its first HTTPS push when the gh token lacks `workflow` scope. Swap the remote to SSH first — it bypasses OAuth-app scoping and avoids an interactive re-auth ask. | — |
 
 ## UNANSWERED
-- **U1**: Is STANDARD (sonnet) less reliable than ECONOMY under identical cards, or
-  was Run 1's death rate purely card size? Settle with a controlled run: same card
-  size across bands (Run 1, 2026-08-14).
+
+- **U1** — Is STANDARD less reliable than ECONOMY under identical cards, or was Run 1's
+  death rate purely card size? Sentinel runs 1-2 did NOT settle it: the ECONOMY worker
+  that drifted most was also the only one with no execution path (L22), which is a better
+  explanation than band. **Settle with**: constant card size AND equal execution access.
+- **U2** — Does L28's preflight remove the observed round-trips, or does acquisition just
+  move earlier on the critical path without shrinking?
+- **U4** — Does retry depth (L41) actually contribute to context death? **Settle with**: log
+  retry depth against every death in the next run's retro death table.
+- **U3** — Does L30's card framing CAUSE the better reports, or did the boss hand those
+  cards to already-reliable lanes? **Settle with**: same framing on a lane that previously
+  produced a weak report.

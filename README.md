@@ -51,7 +51,7 @@ Nobody had to read a diff to find any of it.
 
 ## Install
 
-Foreman is a skill: a markdown file plus three reference documents. There is nothing to build and no dependencies.
+Foreman is a skill: a markdown file, eight reference documents, and one self-lint script. There is nothing to build; the linter needs only Python 3.
 
 ### Claude Code
 
@@ -99,24 +99,46 @@ The pattern is prompt-level, not tool-level. Paste `skill/SKILL.md` into a syste
 skill/
   SKILL.md                          the pattern — org chart, bands, loop, failure modes
   references/
+    context-budget.md               the #1 killer: every observed worker death, and how to prevent it
+    boss-discipline.md              boss-side rules — the boss is the least-checked agent in the run
     call-shapes.md                  copy-paste dispatch: task cards, workers, checkers, skeptic, comms
     constitution-template.md        the done-right standard, with a worked example
     model-intel.md                  model → band/price/strengths, date-stamped and refreshable
-    lessons.md                      the run ledger: promoted rules, candidates, open questions
+    lessons.md                      the ledger index: one line of law per lesson (read every run)
+    lessons-evidence.md             full evidence, mechanisms, negative tests (read only to judge a promotion)
     run-retro.md                    mandatory post-run retro protocol and self-edit guardrails
+  tools/
+    lint.py                         self-lint: size caps, lesson-ID sync, template rules, broken refs
 commands/
   model-route.md                    optional Claude Code slash command front door
 adapters/
   codex-foreman.md                  Codex CLI prompt adaptation
 ```
 
+The ledger is split deliberately. `lessons.md` is the pre-run read and stays under 120 lines no
+matter how many lessons accumulate; the evidence that justifies each one lives in
+`lessons-evidence.md` and is opened only when a promotion or demotion is being judged. A skill
+that lectures workers about context budgets should not hand its own boss a 400-line preamble.
+
 ## The skill maintains itself
 
-Foreman treats its own doctrine the way it treats a build: evidence, execution, amendment. Every run ends with a mandatory retro. Lessons live in `skill/references/lessons.md` with a lifecycle: seen once is a CANDIDATE, confirmed twice (or once with an airtight causal chain) gets promoted into the skill files with a date stamp, contradicted later gets demoted with the counter-evidence recorded. Nothing is silently deleted, and open questions stay listed as UNANSWERED until a controlled run settles them.
+Foreman treats its own doctrine the way it treats a build: evidence, execution, amendment. Every run ends with a mandatory retro. Lessons live in `skill/references/lessons.md` with a lifecycle — seen once is a CANDIDATE, confirmed twice (or once with an airtight causal chain) gets promoted into the skill files with a date stamp, contradicted later gets demoted with the counter-evidence recorded. Nothing is silently deleted, and open questions stay listed as UNANSWERED until a run is designed to settle them.
 
-The boss reads the ledger before writing any spec, applies documented fixes mid-run the moment a known symptom appears, and writes the run section after the cost table. Guardrails stop the loop from eating itself: verification and safety rules can only tighten, every new rule must cite the run that earned it, new checks ship negative-tested, and the files have hard size caps.
+"Airtight" is a checklist, not a feeling: the mechanism fits in one sentence, it is independent of the repo and language, a negative test exists (the concrete example that *would* have shipped under the old practice), and no named confound offers a competing explanation. Fewer than four and it stays a CANDIDATE.
 
-The first field run already paid in. Three of five agents died of context exhaustion because their task cards pointed at large files instead of carrying inline extracts. That produced the context-budget rule (the boss extracts the relevant 20 to 50 lines into the card; workers read at most 2 files), the build-scoping rule (workers verify one test file plus a typecheck; only the boss runs the full build, once, because concurrent builds in one tree corrupt artifacts), and the metric that judges a run by delivered artifacts per token rather than agents spawned.
+**The loop is enforced by a machine, not a promise.** `skill/tools/lint.py` checks size caps, lesson-ID sync between the index and the evidence file, duplicate IDs, promoted rules that never name where they landed, the task-card template's own first-line rule, and broken cross-references — and every check reports how many things it examined and fails at zero, obeying the rule it enforces. The retro close-out chains the commit behind its exit code. This is not decoration: an earlier close-out used a newline instead of a guard and pushed a cap breach straight past a failing check.
+
+**43 lessons and 4 open questions are currently on the books.** A sample of what the runs actually taught:
+
+| | |
+|---|---|
+| **Nothing distinguishes "clean" from "nothing to check"** | Eight separate instances of a green check that examined zero things: a linter that opened no file in 197ms, security checks run against an empty database while 177 real violations existed, a policy runner reporting `0 tests` and exit 0. Exit 0 means "no violation was reported", never "no violation exists". |
+| **The co-authored-fixture trap** | When an agent writes both a transformer and its test fixture, both encode the same wrong assumption and confirm each other perfectly. A 26/26 green policy suite protected infrastructure whose rules could not fire at all — and the "fix" that made the suite green moved the code *away* from correctness. Fixtures must be generated by the exact tool the exit criterion invokes, in the exact mode it invokes it. |
+| **A `blocked` status is not a safe status** | Three reports in one run used a genuine environment blocker as a wrapper carrying unrelated unfinished work. Worse: when the blocker sits on the *verification* step, every later edit silently becomes an unproven claim. One security file took three rounds of "FIXED" with zero executions, and two of its five defects were introduced by fixes. |
+| **The boss is the least-checked agent** | It authored a comparable share of defects to the workers: a wildcard `git add` three times (once committing 240MB of provider binaries), two corrections sent to workers without ever being executed, leftover verification containers that starved a worker for a full segment, and an `ls` of six empty directories read as proof the files existed. That earned its own reference file. |
+| **Every worker death was context, not capability** | Across five runs, not one death was a model that could not do the task. Three causes: reading lists that pointed at large files, unredirected command output (the larger channel, and the one a file cap does not cover), and cards that bundled implementation with harness debugging. Escalating the band for a context death is the common wrong response — a bigger model on the same card dies the same way and costs more. |
+
+The ledger also records the skill's own misses. Its lesson files sat **untracked in git for the skill's entire history** — no ignore rule caused it, and no step in the loop said to save them — so every lesson was one machine failure from being lost. That is now L40, and the close-out ends by pushing.
 
 ## Design notes
 

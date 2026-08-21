@@ -6,19 +6,51 @@ Copy-paste dispatch patterns. Bands resolve to models via model-intel.md at run 
 
 ```
 TASK CARD #<n>
+Output discipline (FIRST, per L18): every command redirects — `cmd > /tmp/o.txt 2>&1; tail -30 /tmp/o.txt`.
+        Never bare `cat` of an unbounded file; never let an install, schema load, or full test run echo into context.
 Objective: <one sentence>
 Inputs: <INLINE EXTRACTS — the relevant 20-50 lines pasted in, not paths to big files.
         Reading list ≤2 files + constitution. Same card size for every band.>
 Verify yourself with: <narrow scope only, e.g. `vitest run <file>` + `tsc --noEmit`.
         NEVER run the full build — the boss runs it once after all workers finish.>
 Done-condition: <testable statement from the spec>
-Will be verified by: <exact command/action the checker runs>
+Will be verified by: <the goal's exit command, QUOTED VERBATIM — character for character,
+        never paraphrased into something that seems equivalent. Do NOT state the output
+        you expect; return the raw output.>
+Test cases you must cover: <enumerate them — a worker will not invent the case you omit,
+        so this list is the coverage ceiling. Review it for completeness before dispatch.>
+Existing code in scope: <if any: "an untested draft by someone else. Finding its bugs
+        counts as success. Report where you looked and found NOTHING, separately from
+        what you fixed.">
 Output (return exactly this JSON): {"status": "done|blocked", "evidence": ["..."], "files_touched": ["..."]}
 Reporting: when finished, SendMessage this JSON to 'main' — going idle without sending it is an incomplete report.
 Mid-task: if blocked, the spec is ambiguous, or constitution clauses conflict, SendMessage 'main' and STOP — never guess.
+Blocked reporting: scope "blocked" to the exact step the missing dependency touches, and list what you
+        finished and did not finish per done-condition. "blocked_on: no way to execute this" plus a list
+        of unproven assertions is ACCEPTED IMMEDIATELY — do not report FIXED for an unexecuted fix.
+Context self-defense: about to read a file over ~200 lines, or a command will emit over ~100 lines?
+        STOP and SendMessage 'main' for an excerpt or a narrower command. A partial worker that asked
+        is worth more than a dead one that tried.
 --- CONSTITUTION ---
 <full constitution text>
 ```
+
+## Worked decomposition (raw ask → dispatch, code build)
+
+User: "add CSV export to the reports page, behind the pro plan."
+Boss produces, in order:
+1. **Spec** (in-session, ~15 lines): route, file format, plan-gate behavior, error states, exit
+   commands verbatim from the repo (`pnpm --filter web test`, `tsc --noEmit`).
+2. **Constitution** (~40 lines from the template): stack facts, quality floor, forbidden
+   shortcuts, per-task verify commands.
+3. **Three cards** (disjoint paths, one capability each, constant size):
+   T1 ECONOMY — `lib/csv.ts` serializer; boss inlines the 30-line report type; tests enumerated.
+   T2 STANDARD — API route + plan gate; boss inlines the existing gate middleware excerpt (~40 lines).
+   T3 ECONOMY — UI button + disabled state; boss inlines the page section (~35 lines).
+   Kernel check: the plan gate touches billing — if it did not already exist, T2 would be
+   boss-built serially (§4 exception), not carded.
+4. **Dispatch** T1-T3 in one message (Agent tool, ≤4 tasks) with checkers cross-tier where legal.
+5. After all PASS: boss runs the full build once → skeptic (tree frozen) → retro → commit.
 
 ## Agent tool (≤4 tasks, or human review between rounds)
 
@@ -45,19 +77,27 @@ Specialized checker: reuse an existing agent with the override, e.g.
 `Agent { subagent_type: "typescript-reviewer", model: "sonnet", prompt: "<card + diff paths>" }`.
 
 Comms (spawn every agent with `name:` so it stays addressable):
-- Retry: SendMessage to the SAME worker by name with the checker's feedback appended.
+- Retry 1 ONLY: SendMessage the SAME worker by name with the checker's feedback appended. Retry 2+ respawns FRESH with a boss-rewritten card (L41) — never keep feeding a transcript that already holds the failed attempt.
 - Amendment push: SendMessage each affected worker when the boss ratifies a spec/constitution change.
 - Missing report: if an agent idles without sending its JSON, SendMessage it once requesting the result; no reply → treat the task as stalled and respawn.
 - Workers never message each other — all coordination routes through the boss ('main').
 
-Skeptic — final gate after all tasks PASS (STANDARD, or FRONTIER on --budget high):
+Skeptic — final gate after all tasks PASS (STANDARD, or FRONTIER on budget high).
+**FREEZE THE TREE FIRST (L14)**: no fixes dispatched into the same working tree while it runs, or give the
+skeptic its own worktree pinned to the commit under test — and require its opening + closing `shasum` snapshot:
 
 ```
 Agent { subagent_type: "general-purpose", model: "sonnet", name: "skeptic",
         description: "Refute the assembled build",
         prompt: "You are the run's adversarial skeptic. Assume the build is broken; prove it.
-        Attack by EXECUTION, not reading: integration seams between tasks, §9 gaming patterns
-        (hidden text, hardcoded expectations, disabled/skipped tests, always-valid logic),
+        Attack BY CONSTRUCTION, not by review: build the inputs, do not read the code and agree.
+        Also audit the self-tests' COVERAGE — which evasions does this suite not attempt?
+        Treat any check that is a grep/regex/LIKE/substring as a defect smell: what does it do
+        against the same content re-cased, restructured, concatenated, or one scope outward?
+        Targets: integration seams between tasks, §9 gaming patterns
+        (hidden text, hardcoded expectations, disabled/skipped tests, always-valid logic,
+        sync/async confusion whose failure branch is unreachable: `execSync(...).catch(`,
+        `.then(` on a sync call, `await` on a non-Promise — tests that look thorough and assert nothing),
         constitution clauses no single checker owned, and the checks themselves.
         Inputs: <constitution path>, <site/build dir>, checker verdicts: <summaries>.
         You are scored on real breaks found, not agreement. Log every attack you ran.
