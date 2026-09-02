@@ -1,26 +1,21 @@
 # Lessons — full evidence
 Companion to `lessons.md`. Read only when judging a promotion/demotion or an UNANSWERED
 question. Run narratives past the cap: lessons-evidence-archive.md.
-
 ## L1 — boss-extracts-inline-inputs — PROMOTED
 Boss puts the relevant 20-50 lines IN the card; workers never read large sources; reading
 list ≤2 files + constitution. *Run 1 (2026-08-14): 3/3 deaths were autocompact thrash on
 8-10 file cards; both survivors had ~3.* → SKILL.md §6; call-shapes.md task card.
-
 ## L2 — no-concurrent-full-builds — PROMOTED
 Worker verification is single-file test + typecheck; full build is boss-only, once, after
 all workers finish (or per-worker worktrees). *Run 1: two concurrent builds corrupted
 `.next` → false FAILs.* → SKILL.md §6; constitution-template.md; call-shapes.md.
-
 ## L3 — card-size-constant-across-bands — PROMOTED
 Card size must not vary with band or the run is uninterpretable. *Run 1 confound: "harder"
 tasks got both higher band and longer reading list.* → SKILL.md §6.
-
 ## L4 — filesystem-is-the-report — PROMOTED
 Assume the report may never arrive; verify via `git status` / expected outputs, and
 withhold root-cause judgment until the idle notification lands. *Run 1: dead agents left
 no transcript; the real cause arrived late, after a wrong diagnosis.* → SKILL.md §6; §9.
-
 ## L4b — absence-of-artifacts-is-not-evidence-of-a-dead-agent — PROMOTED (2026-08-20)
 L4 cuts both ways: an empty tree says the work is NOT DONE, not that the agent died and
 not that work was lost when you take the card over. Record the target file's hash and
@@ -28,14 +23,11 @@ mtime in the takeover note so a later "you overwrote me" claim is settled by evi
 *Run 5 (G-3.8) lane C: boss took over a silent lane, then apologised for destroying work
 that its own earlier check proved never existed. The lane corrected the record itself.*
 → SKILL.md §9.
-
 ## L5 — artifacts-per-token-metric — PROMOTED
 Judge runs by delivered artifacts per token, not agents spawned. *Run 1: 3 dead STANDARD
 agents dominated spend; 2 ECONOMY workers delivered everything.* → SKILL.md §8.
-
 ## L6 — content-inventory-diff — PROMOTED
 Restyle/port tasks: diff the content inventory before vs after. *Run 1.* → constitution-template.md.
-
 ## L7 — economy-tier-does-real-work — CANDIDATE
 ECONOMY handles substantive work when the card is well-extracted; don't reflexively
 band-up. *Run 1: both haiku workers passed with real assertions. Entangled with the L3
@@ -43,7 +35,6 @@ confound. Sentinel runs 1-2 add mixed evidence: an ECONOMY worker produced corre
 fast, well-organised tooling AND twice re-derived a spec it had been given verbatim —
 but it was also the only worker with no execution path, which is the stronger
 explanation (see L22).* **Needs**: one run with constant cards AND equal execution access.
-
 ## L8 — falsify-the-suite-before-trusting-it — PROMOTED (2026-08-19)
 Before a suite is trusted as evidence, run it against a DELIBERATELY WRONG
 implementation. A suite that passes on broken code measures something other than its
@@ -53,7 +44,6 @@ be falsified from OUTSIDE the subject.
 knowingly-broken code, including the spec's own "leak test" which cannot fail because
 the function re-sets the value on entry. Reproduced independently by a cross-tier
 checker.* → SKILL.md §4.
-
 ## L9 — a-check-must-assert-it-examined-something — PROMOTED (2026-08-20)
 Every check declares what it must have examined (files linted, tests collected, tables found)
 and FAILS at zero, independently of exit code. **Exit 0 means "this process reported no
@@ -73,21 +63,18 @@ discards exactly the finding the tightening was for.
 policies carry their whole constraint in WITH CHECK, which the old check never read — the
 write side had never been checked at all. Exactly one was a real over-reach.*
 → SKILL.md §7.
-
 ## L11 — reaching-a-step-is-itself-a-finding — PROMOTED (2026-08-19)
 A pipeline step that has never RUN is not passing. The first real run of a late step
 surfaces defects that look like new breakage and are not. Fail-fast ordering hides the
 tail indefinitely, so the steps furthest from step 1 are likeliest to be broken.
 *Run 2: gate steps 6-8 had never executed. Reaching them found four unrelated defects,
 none caused by the change that reached them.* → SKILL.md §9.
-
 ## L12 — git-diff-is-not-a-restore-proof-for-untracked-files — PROMOTED (2026-08-20)
 Falsification restore-proof must be a CONTENT HASH captured before mutation and compared
 after. `git diff` is empty by construction for untracked files — and new code in a new
 package is untracked for exactly the window foreman workers operate in.
 *Run 4 (G-3.7): a worker's evidence line "git diff --stat → empty (byte-identical)" is
 honest, reads as proof, and establishes nothing.* → SKILL.md §4.
-
 ## L13 — a-never-applied-mutant-looks-exactly-like-a-survived-one — PROMOTED (2026-08-20)
 Prove the mutation LANDED (hash/diff after editing, before running) before trusting the
 result. Green means "the mutant survived" only if the file actually changed.
@@ -95,7 +82,6 @@ result. Green means "the mutant survived" only if the file actually changed.
 on an untouched file, reading exactly like a coverage hole. Re-run properly, the mutant
 killed five tests.* Failure is silent and biased toward the WRONG conclusion.
 → SKILL.md §4.
-
 ## L14 — freeze-the-tree-while-a-skeptic-runs — PROMOTED (2026-08-20)
 Do not dispatch fixes into the tree a skeptic is auditing. Batch findings, or give the
 skeptic its own worktree pinned to the commit under test.
@@ -103,7 +89,6 @@ skeptic its own worktree pinned to the commit under test.
 "BROKEN VERSION FOR FALSIFICATION" — a worker's deliberate mutant, visible as shipping
 code. A worker's mutant reads as a false CRITICAL; a landed fix reads as a false
 positive. Only the L12 hash snapshot made the contamination detectable.* → SKILL.md §7.
-
 ## L15 — workers-do-run-git-despite-the-prohibition — CANDIDATE (2026-08-20)
 Run `git log --oneline origin/main..HEAD` and `git status --short` BEFORE composing your
 commit. A constitution clause reserving git to the boss is a request, not an enforcement.
@@ -111,7 +96,6 @@ commit. A constitution clause reserving git to the boss is a request, not an enf
 with the wrong subject convention, capturing an intermediate state that still held
 defects the skeptics had not yet found. Found only because `git add -A` staged 5 files
 when ~15 were expected.* **Needs**: a second sighting, or worktree isolation exercised.
-
 ## L16 — assert-by-value-not-by-difference-when-the-output-embeds-a-discriminator — PROMOTED (2026-08-20)
 When the artifact embeds an identifier that ALREADY differs between the compared cases, a
 difference assertion is satisfied by that identifier and never reaches the computation.
@@ -120,7 +104,6 @@ Assert the computed component by EXPECTED VALUE. Tell: output is a composite
 *Run 5 lane A: forcing every tenant to UTC left 18/18 passing, because the zone NAME in
 the key differed regardless.* Corollary for checkers: mutate the COMPUTATION while
 preserving the FORMAT. → SKILL.md §4.
-
 ## L17 — one-capability-per-card / boss-owns-the-test-harness — PROMOTED (2026-08-20)
 When a task's acceptance oracle needs non-trivial environment setup (real DB + migrations +
 roles + fixtures), the BOSS writes that harness and ships a working oracle; the worker's card
@@ -151,7 +134,6 @@ been seen earlier via a different source — the NORMAL case. It walked
 `snapshot.first_seen_run → run → source` instead of the document's own `source_id`.*
 Generalises to any query joining through a shared/deduplicated intermediate.
 **Needs**: one more run.
-
 ## L20 — fixtures-come-from-the-exact-tool-the-exit-criterion-invokes — PROMOTED (2026-08-20)
 **The co-authored-fixture trap.** An agent authoring BOTH a transformer and its test input
 encodes the same wrong assumption twice; they confirm each other and the green CERTIFIES a
@@ -173,7 +155,6 @@ The real command could not LOAD the policies (Rego v1 partial-set vs partial-obj
 shape). 26/26 green through four review rounds. `opa 1.19.1` and `conftest dev (OPA
 1.19.0)` disagree on loader strictness despite near-identical versions — version parity
 does not imply behavioural parity.* → SKILL.md §6; call-shapes.md.
-
 ## L22 — blocked-is-not-a-safe-status — PROMOTED (2026-08-20)
 A `blocked` report gets the SAME review as a `done` report, scoped to the step the missing
 dependency touches, enumerating what was and was not finished. **When the blocker is on the
@@ -188,7 +169,6 @@ path, and the degradation is invisible in the reports.** The fix removes the inc
 ## L23 — a-pasted-command-output-is-a-claim — PROMOTED (2026-08-20)
 The boss re-runs anything that gates a merge, and never NAMES the output it expects.
 *Run 1: a worker's report pasted `grep -n "expect(true).toBe(true)" tools/` → `(no results)`. The boss ran it: three hits, in the exact four tests verifying tenant isolation. Whether the grep ran earlier, elsewhere, or never, the effect is identical — a verification claim that reads as executed evidence and is not. The card had said `(no results)` was expected, which is the output shape easiest to produce without doing the work.* → SKILL.md §7, boss-disc §3.
-
 ## L24 — the-boss-instruction-is-a-claim-too — PROMOTED (2026-08-20)
 Execute a correction against a real substrate BEFORE sending it to a worker.
 *Run 1: two of five defects in one guardrail file traced to boss instructions (a
@@ -198,7 +178,6 @@ minute while a 500 MB VM downloaded.*
 **Related**: on a guardrail file, STRUCTURE is part of the spec, not an implementation
 detail — the worker's "same semantics, different shape" rewrite generated two defects at
 once. → boss-discipline.md §1.
-
 ## L25 — never-git-add-A-while-agents-are-live — PROMOTED (2026-08-20)
 Add explicit paths, or `git add -u -- <paths>`. Write `.gitignore` entries for tool caches
 BEFORE running the tool that creates them.
@@ -207,7 +186,6 @@ in-flight test into a third's commit; committed 240 MB of provider binaries, sil
 breaking every push for 40 minutes. Incident 1 was noted at the time and the habit
 continued — a lesson recorded but not adopted is not a lesson.*
 → boss-discipline.md §2.
-
 ## L26 — the-boss-cleans-up-and-checks-environment-claims — PROMOTED (2026-08-20)
 Remove every container/process/port the boss starts, immediately. Maintain an explicit
 agent roster and reconcile it at every round boundary — idle notifications are not a
@@ -218,7 +196,6 @@ was never re-carded and was lost track of entirely.*
 **Corollary**: an agent reporting "blocked on the environment" may be reporting a fact
 about the ORCHESTRATOR. Check the claim independently (`docker ps` settled it in two
 seconds) rather than picking a posture. → boss-discipline.md §4, §5.
-
 ## L27 — attack-by-construction-and-treat-text-matching-as-a-smell — PROMOTED (2026-08-20)
 Brief the skeptic to ATTACK BY CONSTRUCTION, not review, and to audit the suite's COVERAGE:
 *which evasions does this suite not attempt?* **Treat "the check is a grep / regex / LIKE /
@@ -228,7 +205,6 @@ restructured, concatenated, or moved one scope outward.
 **The deepest finding**: the bypass was in the frozen SPEC, faithfully transcribed — four
 review rounds spent making the tool correctly implement a specification that does not do
 what it claims. → SKILL.md §4, §7.
-
 ## L28 — toolchain-preflight-before-dispatch — CANDIDATE (2026-08-20)
 Enumerate every binary named in the goals' exit criteria and start all installs in parallel
 BEFORE spawning any worker. When a capability has two acquisition paths of very different
@@ -246,14 +222,12 @@ load-bearing artifact — review them for completeness BEFORE dispatch.
 *Run 1: a card enumerated six self-test cases. The omitted case ("RLS enabled, FORCE set,
 but NO policy at all") was exactly where the tool had a permanently dead branch.*
 → SKILL.md §6; boss-discipline.md §16.
-
 ## L30 — frame-inherited-code-as-suspect-and-name-bug-finding-as-the-deliverable — CANDIDATE (2026-08-20)
 Card pattern: state that existing code is an untested draft by someone else, that finding
 its bugs counts as success, and that the report must say **where it looked and found
 nothing** — separately from what it fixed.
 *Run 1: the three most reliable reports all came from cards written this way. One survived full independent re-verification intact and disclosed a process negative unprompted. One declined speculative security hardening, proved the attack could not reach the function, and escalated the design question. One returned BLOCKED with zero edits rather than write 98 speculative indexes that would have greened a check while creating the exact regression the check exists to prevent. The WORST report came from the worker under repeated pressure to produce a green result.* Sentinel read-path/2 and /4 reused it on every lane; lanes reported real divergences (a card contradicting the oracle, an oracle bug blocking ten tests, two self-flagged unproven behaviours) rather than quietly satisfying one side.
 **Why CANDIDATE**: correlation not proven causal. Additive and safe. → call-shapes.md.
-
 ## L31 — re-task-a-blocked-agent-to-measure-the-blocking-question — PROMOTED (2026-08-20)
 A blocked agent still has useful work: turn the blocking question into the evidence that
 answers it. Waiting for a human to arbitrate between two arguments produces a worse
@@ -263,7 +237,6 @@ plans over 470k synthetic rows. One `\di+` line killed the compromise everyone's
 intuition reaches for (3160 kB vs 3272 kB — a "cheap extra index" is a second full
 index). It also re-derived the disputed count independently and found two double-counting
 artifacts plus two real gaps unrelated to the dispute.* → boss-discipline.md §15.
-
 ## L32 — one-fact-in-two-artifacts-needs-its-own-check — PROMOTED (2026-08-20)
 When the same fact lives in two artifacts, a fix applied to one is NOT applied. Verify
 through the path PRODUCTION uses, not the path convenient to test. If two artifacts must
@@ -274,7 +247,6 @@ green because the boss was hand-applying the fixed path. Run 2, same shape: a Po
 decision recorded in an ADR, agreed, never implemented — and invisible because the gate
 builds its database from different inputs than production does.*
 **A decision is not applied until a command shows it applied.** → boss-discipline.md §11.
-
 ## L33 — separate-the-observation-from-the-attribution — PROMOTED (2026-08-20)
 Commit the observation, never the attribution. "The file was rewritten between commit X and
 read Y, not by me" is established; "Worker W rewrote it" is a causal claim a diff cannot
@@ -285,7 +257,6 @@ the memory to compaction.* **Structural fix worth more than the attribution**: a
 lane must touch becomes BOSS-OWNED — workers report the filename, the boss adds the line.
 Contention removed by design, the only fix that survives an agent forgetting it collided.
 → boss-discipline.md §7.
-
 ## L34 — record-what-you-did-never-what-you-concluded-exists — PROMOTED (2026-08-20)
 "Searched X, Y, Z on <date>, found no public endpoint" is honest and re-checkable.
 "There is no public endpoint" is a claim about the world one failed search cannot support
@@ -295,7 +266,6 @@ its own failure to find it into a source comment as a property of the world. The
 exists and serves the product's highest-tier source. The anti-fabrication rule turned
 inside out.* Same rule for fixtures: URL + date + checksum, or within months a real
 fixture is indistinguishable from a fabricated one. → boss-discipline.md §12.
-
 ## L35 — safety-exceptions-are-scoped-to-named-paths — PROMOTED (2026-08-20)
 Never to a glob class. If you can state the exception as "tests are exempt", it is too
 broad; the correct form is "these three files, because X", with a note not to widen it.
@@ -303,14 +273,12 @@ broad; the correct form is "these three files, because X", with a note not to wi
 not a bug. The obvious `**/*.test.ts` exemption would have disabled three security rules
 across every test file forever, and tests are exactly where a raw DB handle gets written
 casually.* → SKILL.md §9.
-
 ## L36 — assert-state-on-both-sides-of-a-reversal — PROMOTED (2026-08-20)
 For any reversible operation (migration up/down, feature-flag on/off, encrypt/decrypt),
 assert the STATE on both sides, never the exit code of the reversal. A `down` that does
 nothing produces exactly the same exit codes as one that works.
 *Run 1: the migration roundtrip was verified by table count — 0 → 50 → 0 → 50 — which
 also proved idempotency. Three exit-0s would have proved nothing.* → SKILL.md §4.
-
 ## L37 — guardrails-can-be-mutually-unsatisfiable — PROMOTED (2026-08-20)
 When two frozen guardrails cannot both be satisfied, BLOCKED is the correct output and
 any agent that "just makes it pass" necessarily breaks something real. The boss arbitrates
@@ -320,7 +288,6 @@ checker required the FK column to lead; the spec's OWN prescribed remediation fa
 own checker twice. Writing the 98 obvious indexes would have greened the check while
 creating exactly the cross-tenant scan pattern the other rule exists to prevent — the
 tool would have certified the damage.* → SKILL.md §7.
-
 ## L38 — check-a-blocked-count-for-homogeneity — CANDIDATE (2026-08-20)
 When a blocked finding count is large, check whether it is one population before accepting
 the label. A genuine blocker and an ordinary backlog inside one number make both
@@ -328,7 +295,6 @@ unactionable — the blocker justifies ignoring the count, and the count hides t
 *Run 2: "79 findings, blocked on a rule conflict" was accurate and stopped all work on it.
 Removing the unsatisfiable population left 26 ordinary one-line missing indexes, several
 on real product query paths.* **Needs**: one more sighting.
-
 ## L39 — a-text-match-cannot-tell-code-from-prose-about-code — PROMOTED (2026-08-20)
 A check that greps a file cannot distinguish executable content from documentation ABOUT
 that content. Scope such checks to executable positions (YAML `run:` keys, AST call sites)
@@ -339,7 +305,6 @@ an anti-goal check flagged a test fixture whose entire job is to contain the ban
 **Also**: fixture identifiers must not be substrings of one another —
 `"uncovered_table"` contains `"covered_table"`, silently inverting a `not.toContain`
 assertion regardless of the tool's real logic. → SKILL.md §9.
-
 ## L43 — the-boss-owned-shared-file-is-the-run-s-blind-spot — CANDIDATE (2026-08-21)
 L33 says remove contention by giving shared files to the boss. Right — and it creates an
 unowned file: no lane's card names it, so no lane's checker attacks it.
@@ -348,7 +313,6 @@ defects in the boss-written `server.ts` + procedure chain, two CRITICAL — tRPC
 thrown `Error` into a `TRPCError` KEEPING its message, so internal text was published in
 the 500 body; and a rate limit in module state a second server silently rewrote.*
 **Fix**: the skeptic's brief names the boss-owned files explicitly as target one.
-
 ## L44 — a-fixture-only-suite-cannot-reach-an-error-path — PROMOTED (2026-08-21)
 When every port implementation is a fixture that returns cleanly, no test can drive a
 throw: the error boundary is untested BY CONSTRUCTION and reads as covered. The oracle
@@ -356,24 +320,20 @@ must include one adapter that throws on purpose.
 *Twice: G-3.7 (no error boundary existed) and read-path/2 (the 500 leak survived three reviews AND an 11-mutant sweep; one probe with a throwing `findEvent` found it at once).*
 **Corollary**: the mutation list is a coverage CEILING like the test list (L29) — invite
 the checker to ADD mutants; the self-added one found the second survivor.
-
 ## L45 — an instrument that perturbs the system will confirm any theory — PROMOTED (2026-08-21)
 When a bug DISAPPEARS under instrumentation, suspect the instrument's latency before you believe its story. Bisect the added delay; if the bug tracks the delay, the probe is the variable. And interrogate the SYSTEM's own state, never the flag the code under test sets.
 *Sentinel read-path/3, twice in one run. A flaky reconnect test: (a) debug queries a worker had added were themselves the reason it passed — removing them made it fail every time, and they were then "confirmed" as the fix by a theory they had created; (b) a diagnostic polling loop took ~500 ms and made delivery work, which read as "the reconnect is fine". Three confident diagnoses followed and all three were disproved by measurement, not argument. The real cause: the test waited on `isConnected`, still true because the socket error had not propagated. `pg_stat_activity` showed ZERO backends at the moment of the insert — the system's own state settled in one query what the code's self-report could not.*
 **Airtight chain**: both failures share one mechanism (probe latency as a hidden variable), it is understood, and it is language- and tool-independent. → SKILL.md §4.
-
 ## L46 — one surviving mutant is not automatically a coverage gap — PROMOTED (2026-08-21)
 Before recording a survivor as a hole, check whether a SIBLING guard covers the same property. Two either-sufficient guards each survive alone and the pair dies together — that is redundancy, not a gap, and deleting the "dead" one is the wrong fix. Escalate to removing BOTH; if the suite goes red, the property is defended and the finding is the redundancy, which belongs in a comment so the next reader does not rediscover it as dead code.
 *Sentinel read-path/4: a no-zombie-reconnect test survived removal of the `closed` check before the reconnect timer, and survived removal of the `closed` check inside `connect()`, and went RED when both were removed — along with a second test. Two earlier goals had each spent a commit deleting genuinely unfalsifiable guards, and applying that precedent here would have removed a real one.*
 **Related trap from the same run**: the FIRST version of that test was vacuous for a different reason — it asserted on the client's own state callbacks, which the client SUPPRESSES once closed. A subject that silences the channel a test listens on cannot be falsified through it; assert on the system's state instead (the server's subscription count). → SKILL.md §4.
-
 ## L47 — fixing the instance teaches nothing; fix the habit — PROMOTED (2026-08-21)
 When a defect is a CLASS an author can repeat, the fix is incomplete until the repo has been swept for other instances and the rule written where the next author will read it. Fixing only the reported case is the bandaid CLAUDE.md forbids, applied to one's own work.
 *Sentinel, twice in one session by the BOSS. A test fixture bound one SQL placeholder to two columns of different types (`$2` for `slug` varchar and `name` text); Postgres refuses the statement at Parse time and ten tests failed in setup. It was fixed in that file. Hours later the same author wrote `$3` across THREE differently-typed columns in a new fixture, and all 14 tests of a new suite failed identically in setup — found by a worker, who correctly reported the do-not-modify oracle as broken and STOPPED. The second fix included a repo-wide sweep for reused placeholders (none) and a comment naming the first occurrence.*
 **Practice**: after fixing a class-shaped defect, grep for siblings and put the reason in a comment at the fix site, not only in the commit message. A commit message is read once; the comment is read by whoever is about to repeat it. → boss-discipline.md.
 
 <!-- UNANSWERED lives in lessons.md; a second copy here drifted. Do not reintroduce one. -->
-
 ## L40 — the-ledger-is-committed-at-run-close — PROMOTED (2026-08-20)
 The retro's final step commits and pushes the ledger. An uncommitted promotion is a lesson
 learned and thrown away.
@@ -410,29 +370,24 @@ A mutation checker was dispatched in the same message as two reviewers over the 
 within an hour of the boss reading the note forbidding it. "Read-only" is wrong reasoning: the
 reviewers' `tsc`/`eslint` read the file the mutator corrupts. Caught before either finished;
 suite re-run 25/25 to prove no mutation survived the stop.
-
 ## L50 — fewer agents is not less serialization
 After three stalls the boss merged two oracle cards into one, making one lane the sole
 prerequisite for FOUR downstream lanes; when it went quiet nothing could start. Same error as
 "an atomic dependency is not parallelism", from the other side. Reduce card SIZE, not COUNT.
-
 ## L51 — commit before mutating
 Falsifying a new domain function by deleting its guard could not be reverted: `git checkout`
 has nothing for an UNTRACKED file. Hash-proof of restore is necessary but not sufficient —
 there must be something to restore FROM. CLAUDE.md already carried this rule, earned when a
 regex destroyed four inserts in an untracked seeder, and it was violated anyway.
-
 ## L52 — the skeptic's brief is a card — CANDIDATE
 Run 10's skeptic died of autocompact thrash carrying 8 attacks and a wide file list —
 the L1/L17 shape, exempted because a skeptic is not called a worker. Same context
 budget: ≤4 attacks, code inlined; overflow attacks go to the boss or a second skeptic.
-
 ## L53 — two silent zero-artifact deaths in one run: collapse to the boss — CANDIDATE
 *Run 11: four workers died of autocompact thrash on compliant cards while two siblings
 delivered; respawning bought nothing.* Rule: after the second silent death, stop respawning
 and finish remaining lanes in-session with identical TDD + mutation discipline. Run 16
 applied it (two deaths → boss finished both lanes) and the root cause turned out to be L55.
-
 ## L54 — measure the SUBJECT, not just the card — PROMOTED
 *Runs 13-14 (2026-08-26): four workers died of autocompact thrash with zero artifacts on
 cards that passed L1/L17/L18; every one was assigned an 600-800-line screen file or a
@@ -447,4 +402,24 @@ haiku 119,121; dead lanes show 6 compaction markers, peak 198K.* Mechanism: ever
 loads the CLAUDE.md files + rules before its card; the project file was 131 KB (95 KB a §7
 mandated to be ten lines). Airtight: one cause, verified by numbers; fixed at source (131→39
 KB). Negative test: run 16's cards pass every prior checklist item; only this preflight bites. Second measurement the same run: skeptic as `general-purpose` 164,936 first turn, died; as `tdd-guide` 90,536, delivered — the tool catalogue is the largest weight, and the CLAUDE.md cut did not move a same-session baseline (U6).
-## Run 17 retro — (Phase A stop-lying, 2026-09-02): 3 `tdd-guide` workers + 3 `typescript-reviewer` checkers + 1 skeptic, ZERO deaths (cards 44-60 lines, ≤1 source file; a 403-line seed file was cut from reading lists). Checkers killed 11/12 mutants; survivors were real gaps (freshness shared-grant path; realtime CRLF stall + close race) fixed as retry 1 with their own mutation proofs. Skeptic found one HIGH in a BOSS lane (L43, third time): an honest-failure branch with no test. Policy-file edit deferred until every container-booting worker was idle (containers load policies/*.sql at boot). Confound: `tdd-guide` has no Context7 tools; the worker said so rather than faking a citation. **R18** (Phase B round 1, 2026-09-02): 3 `tdd-guide` workers + 3 checkers + 1 skeptic, zero deaths; one worker STOPPED on a missing workspace dependency instead of hand-symlinking (correct), one caught the card's threshold contradicting decide.ts. Checkers killed 11/14 mutants; 3 survivors were fixture blind spots, fixed as retry 1 with proofs. Skeptic (L43, fourth time) found one CRITICAL and one HIGH in the BOSS adapter lane (orphan verification row on a failed move; actor attribution untested on real Postgres) — the boss adds real-Postgres tests that inspect the table after failure paths. Two gate flakes were 10 s hook timeouts under load → hookTimeout 120 s on container configs.
+## L56 — a logged outcome is not a recorded one — CANDIDATE (2026-09-02)
+*Run 19 (Sentinel): live `retire-noise --dry-run` reported 0 abstained against a known ~84% abstention rate.* Enrich
+`console.log`ged the abstention and `continue`d; no row was written, so the reader had nothing to read and the doc
+was re-billed every pass. Rule: before trusting a count that depends on an upstream stage, open that stage and find
+the INSERT. A stage whose only trace of an outcome is a log line has not recorded it. Same shape as L19 (a row can lie) one step earlier: no row at all.
+## L57 — seed tests under the tenants the code uses live — CANDIDATE (2026-09-02)
+*Run 19: `retire-noise` tests seeded writer and reader under ONE tenant and passed; live, enrich wrote under the shared
+tenant and the reader ran as the analyst tenant, so the abstention branch could never fire (99 rows stored, 0 read).*
+Rule: anything crossing a shared corpus is tested in the live shape — shared source, grant row, shared-tenant document
+and run row, analyst-tenant event. L20 (fixtures from the exact tool) one layer down: the fixture's IDENTITY must match too.
+## L58 — an ordering test sets the tiebreak AGAINST the winner — CANDIDATE (2026-09-02)
+*Run 20: three rank terms could each be deleted with every test green — the fixture ids happened to sort the expected
+way under the id tiebreak.* Rule: for any ordering formula, build pair tests where the event that should win has the
+tiebreak against it (smaller id under `id DESC`), so only the term under test can order the pair; and a test double
+must sort as production sorts, proven by a parity test between the two formulas. A checker's mutant list (L29) should include deleting each term.
+## L59 — the review surface is the site, not the suite — CANDIDATE (2026-09-02)
+*Run 20: two defects were visible only live after a green gate AND a passed skeptic — a 200-character title quoted
+in a 40px headline, and a run cap (60) that made "usually N a week" unreachable for hourly feeds.* Rule: after every
+deploy the boss opens the screens the change touches (rendered, with live data) before writing done; the skeptic's
+brief names the live URL as a target when the change has a UI. Extends L47: the habit is "done means seen", not "done means green".
+## Run 19-20 retro — (Sentinel, 2026-09-02): both zero deaths on `tdd-guide` workers + narrow checkers. R19: dry-run count was wrong because a stage logged instead of inserting (L56) and the test seeded one tenant while live used two (L57); one gate flake on container teardown (57P01, re-run once before diagnosing). R20: three rank terms each survived deletion because fixture ids sorted the expected way by luck (L58); two defects appeared only on the deployed screens after a green gate and a passed skeptic (L59). Commit-guard hook blocked ordinary long commit messages twice → write the message to a file and `git commit -F`.

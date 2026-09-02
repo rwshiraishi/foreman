@@ -70,6 +70,10 @@ Never reuse an ID. Never silently delete an entry.
 | L54 | PROMOTED | Measure the SUBJECT, not just the card: `wc -l` every file the worker will WRITE TO and check what its suite boots. Over ~400 lines or a server boot, the card cannot save it — excerpt-and-patch, else the boss extracts a small module, else it is a boss lane. Never re-card the same subject at any band. | SKILL §6, §9, context-budget |
 
 | L55 | PROMOTED | Measure the FIXED baseline before dispatch, and NEVER spawn a type with `*`/"all except" tools (`general-purpose`, `Explore`, `Plan`): the MCP catalogue alone is ~74K tokens. Run 16 measured first-turn context: general-purpose 165K/200K (3 of 4 died), Explore 164K, tdd-guide 90K (delivered). Pick the narrowest `subagent_type` whose tools cover the card; cut injected CLAUDE.md/rules bytes÷4 next. | SKILL §6, context-budget |
+| L56 | CANDIDATE | A logged outcome is not a recorded one: before trusting any count that depends on an upstream stage, open that stage and find the INSERT. A stage whose only trace is a log line has not recorded anything. | — |
+| L57 | CANDIDATE | Seed tests under the tenants the code uses live (shared writer, analyst reader). A single-tenant fixture cannot reach a branch that only fires across tenants. L20 one layer down: fixture identity must match too. | — |
+| L58 | CANDIDATE | An ordering test sets the tiebreak AGAINST the expected winner, so only the term under test can order the pair; test doubles sort as production sorts, proven by a parity test. Add "delete each term" to the checker's mutants. | — |
+| L59 | CANDIDATE | The review surface is the site, not the suite: after every deploy the boss opens the screens the change touches before writing done; a skeptic brief names the live URL when the change has a UI. | — |
 
 ## UNANSWERED
 
@@ -97,4 +101,4 @@ Never reuse an ID. Never silently delete an entry.
   produced a weak report.
 
 ## Run retros
-Compact per-run retros (runs 12-17) live in `lessons-evidence.md` § "Run retros"; this index keeps only the law.
+Compact per-run retros (runs 12-20) live in `lessons-evidence.md` § "Run retros"; this index keeps only the law.
