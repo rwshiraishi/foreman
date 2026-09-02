@@ -6,6 +6,7 @@
 [![Field runs](https://img.shields.io/badge/field%20runs-20-8a5cf6.svg)](skill/references/lessons-evidence.md)
 [![Lessons on the books](https://img.shields.io/badge/lessons-60%20%2845%20promoted%29-8a5cf6.svg)](skill/references/lessons.md)
 [![Runtime](https://img.shields.io/badge/runtime-markdown%20%2B%20python3-lightgrey.svg)](#requirements)
+[![Made by Neon Peach, LLC](https://img.shields.io/badge/made%20by-Neon%20Peach%2C%20LLC-ff8c69.svg)](https://neonpeach.co)
 
 The result is a run that costs a fraction of an all-frontier build and catches defects that self-review never finds. Every report routes to the boss. Nothing is declared done by the agent that did the work.
 
@@ -16,7 +17,7 @@ The result is a run that costs a fraction of an all-frontier build and catches d
 
 Every arrow ends at the boss. Workers never message each other, checkers never message workers, and the skeptic reports to the boss alone. It cannot dispatch its own fixes and it cannot end the run.
 
-**Contents:** [Why](#why-this-exists) · [How a run works](#how-a-run-works) · [The context killer](#the-one-thing-that-kills-workers-context) · [Field record](#field-record) · [Quick start](#quick-start) · [Install](#install) · [Using it](#using-it) · [Layout](#repository-layout) · [Self-maintenance](#the-skill-maintains-itself) · [Design notes](#design-notes) · [Contributing](#contributing)
+**Contents:** [Why](#why-this-exists) · [How a run works](#how-a-run-works) · [The context killer](#the-one-thing-that-kills-workers-context) · [Field record](#field-record) · [Quick start](#quick-start) · [Install](#install) · [Using it](#using-it) · [Layout](#repository-layout) · [Self-maintenance](#the-skill-maintains-itself) · [Design notes](#design-notes) · [Contributing](#contributing) · [Maintainer](#maintainer)
 
 ## Why this exists
 
@@ -293,6 +294,10 @@ python3 skill/tools/lint.py
 
 The org-chart-plus-verification framing was popularized in a widely shared demonstration of rebuilding an author's website with a tiered agent team. The checker-decorrelation vocabulary (cross-vendor, cross-tier, same-model) is borrowed from a solution-tournament pattern for scoring competing implementations. The idea that verification must execute rather than read is older than any of it and keeps having to be relearned.
 
+## Maintainer
+
+Foreman is built and maintained by [Neon Peach, LLC](https://neonpeach.co). Bug reports, field retros, and pull requests are welcome here on GitHub.
+
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT, copyright Neon Peach, LLC. See [LICENSE](LICENSE).
