@@ -200,3 +200,19 @@ A card enumerated six self-test cases. The case it omitted ("table with RLS enab
 NO policy at all") was exactly where the tool had a permanently dead branch. **A worker
 will not invent the case you omitted.** Boss-authored test enumerations are a
 load-bearing artifact — review them for completeness before dispatch, not after.
+
+## 17. Fixing the instance teaches nothing — fix the habit (L47)
+
+A defect that is a CLASS, not a one-off, is not fixed until the repo has been swept for
+siblings and the reason written where the next author will read it.
+
+Twice in one session the boss bound a single SQL placeholder to columns of different
+types (`$2` for a varchar and a text column; later `$3` across three). Postgres refuses
+the statement at Parse time, so every test in the suite fails in setup, pointing at the
+fixture rather than at anything under test. The first was fixed in place and taught
+nothing; the second cost a worker a full segment and was found only because it reported
+the do-not-modify oracle as broken and stopped instead of guessing.
+
+**The fix has three parts**: correct the instance, `grep` for siblings across the repo,
+and leave a comment AT the fix site naming the class. A commit message is read once by
+whoever merges it; the comment is read by whoever is about to repeat the mistake.

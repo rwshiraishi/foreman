@@ -23,6 +23,8 @@ One page, written by the boss before any dispatch. Every worker and checker prom
   reads the source file and character-compares against it. Inline only what is short.>
 
 ## Forbidden shortcuts (instant FAIL)
+
+- Never `git stash`, `git checkout` another lane's file, or `git add -A`: each moves files another agent is editing (run 17: a worker stashed mid-round to test a hypothesis). Boss commits; workers never touch the index.
 - Hidden/invisible elements to satisfy content checks
 - Hardcoded expected values in place of real computation
 - Mock/placeholder data standing in for missing real values (per CLAUDE.md)

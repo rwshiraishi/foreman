@@ -55,9 +55,27 @@ Never reuse an ID. Never silently delete an entry.
 | L39 | PROMOTED | A text match cannot tell code from prose ABOUT code. Scope to executable positions. Fixture identifiers must not be substrings of one another. | SKILL §9 |
 | L40 | PROMOTED | The ledger is committed at run close. An uncommitted promotion is a lesson learned and thrown away. | SKILL §10, run-retro |
 | L41 | CANDIDATE | Retry 2+ respawns FRESH with a boss-rewritten card, rather than appending feedback to a transcript already holding the failed attempt. INFERRED, not observed. | context-budget |
+| L43 | PROMOTED | The boss-owned shared file is the run's blind spot: no lane's card names it, so no checker attacks it. The skeptic's brief names those files as target one. | SKILL §4 |
+| L44 | PROMOTED | A fixture-only suite cannot reach an error path — the boundary is untested BY CONSTRUCTION. Ship one adapter that throws. The mutation list is a coverage ceiling too; let the checker add mutants. | SKILL §4, §6 |
+| L45 | PROMOTED | An instrument that perturbs the system confirms any theory. If a bug vanishes under instrumentation, bisect the probe's latency first. Interrogate the SYSTEM's state, never the flag the code under test sets. | SKILL §4 |
+| L46 | PROMOTED | One surviving mutant is not automatically a gap — check for an either-sufficient sibling guard and try removing BOTH. Redundancy belongs in a comment, not in a deletion. | SKILL §4 |
+| L47 | PROMOTED | Fixing the instance teaches nothing. After a class-shaped defect, sweep the repo for siblings and put the reason in a comment AT the fix site — a commit message is read once. | boss-disc §17 |
+| L48 | PROMOTED | One capability per AGENT LIFETIME, not merely per card. Re-tasking a blocked agent IN PLACE carries its first task's evidence into the second card and kills it. Respawn fresh with the measurement's CONCLUSIONS. | SKILL §7, context-budget |
+| L49 | PROMOTED | A mutating agent runs ALONE — "read-only" reviewers included, because their tsc/eslint read the file the mutator is corrupting. After stopping a mutator mid-flight, re-run the suite before believing the tree is clean. | SKILL §6, boss-disc |
+| L50 | CANDIDATE | Merging cards to reduce agent count can CREATE an atomic dependency the real graph did not have. Fewer agents is not less serialization; reduce card SIZE, not oracle COUNT. | — |
+| L51 | PROMOTED | Commit BEFORE mutating. `git checkout --` cannot restore an untracked file, so a falsification run on new code has no source to revert from. Hash-proof is not enough if there is nothing to restore. | boss-disc |
 | L42 | CANDIDATE | A build shipping `.github/workflows/*` fails its first HTTPS push when the gh token lacks `workflow` scope. Swap the remote to SSH first — it bypasses OAuth-app scoping and avoids an interactive re-auth ask. | — |
+| L52 | CANDIDATE | The skeptic's brief is a card: same context budget — ≤4 attacks, code under attack inlined; overflow attacks go to the boss or a second skeptic. | — |
+| L53 | CANDIDATE | Two silent zero-artifact worker deaths in one run: stop respawning, collapse remaining lanes to in-session boss execution with identical TDD+mutation discipline. Run 11's four were autocompact thrash on COMPLIANT cards — refill source unanswered (U5). | — |
+| L54 | PROMOTED | Measure the SUBJECT, not just the card: `wc -l` every file the worker will WRITE TO and check what its suite boots. Over ~400 lines or a server boot, the card cannot save it — excerpt-and-patch, else the boss extracts a small module, else it is a boss lane. Never re-card the same subject at any band. | SKILL §6, §9, context-budget |
+
+| L55 | PROMOTED | Measure the FIXED baseline before dispatch, and NEVER spawn a type with `*`/"all except" tools (`general-purpose`, `Explore`, `Plan`): the MCP catalogue alone is ~74K tokens. Run 16 measured first-turn context: general-purpose 165K/200K (3 of 4 died), Explore 164K, tdd-guide 90K (delivered). Pick the narrowest `subagent_type` whose tools cover the card; cut injected CLAUDE.md/rules bytes÷4 next. | SKILL §6, context-budget |
 
 ## UNANSWERED
+
+- **U6** — Run 16: cutting the project CLAUDE.md from 131 KB to 39 KB did NOT lower a same-session
+  subagent's first-turn context (164K → 165K). Is CLAUDE.md snapshotted at session start and
+  inherited? **Settle with**: measure a worker's first `usage` in a FRESH session after the cut.
 
 - **U1** — Is STANDARD less reliable than ECONOMY under identical cards, or was Run 1's
   death rate purely card size? Sentinel runs 1-2 did NOT settle it: the ECONOMY worker
@@ -65,8 +83,18 @@ Never reuse an ID. Never silently delete an entry.
   explanation than band. **Settle with**: constant card size AND equal execution access.
 - **U2** — Does L28's preflight remove the observed round-trips, or does acquisition just
   move earlier on the critical path without shrinking?
-- **U4** — Does retry depth (L41) actually contribute to context death? **Settle with**: log
-  retry depth against every death in the next run's retro death table.
+- **U4** — SETTLED by run 9 (Sentinel read-path/7): a worker that survived its first card
+  died of autocompact thrash on its SECOND, which was SMALLER than the first. Task depth,
+  not card size, was the cause — its context still held eleven tables of DDL from the
+  measurement it had just delivered. See L48.
+- **U5** — Run 11: four workers hit autocompact thrash on compliant cards (≤2 reads,
+  redirects, 60-120 lines) while two siblings with same-shape cards delivered. What
+  refilled their contexts? Run 14 answers half of it — every death was on a 600-800-line
+  screen file (L54) — but not why redirection failed to contain the suites. **Settle
+  with**: one instrumented worker logging every read and tool-output size before each turn.
 - **U3** — Does L30's card framing CAUSE the better reports, or did the boss hand those
   cards to already-reliable lanes? **Settle with**: same framing on a lane that previously
   produced a weak report.
+
+## Run retros
+Compact per-run retros (runs 12-17) live in `lessons-evidence.md` § "Run retros"; this index keeps only the law.
