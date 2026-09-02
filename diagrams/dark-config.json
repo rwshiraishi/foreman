@@ -6,6 +6,19 @@
     "textColor": "#e6edf3",
     "labelTextColor": "#e6edf3",
     "tertiaryTextColor": "#e6edf3",
-    "lineColor": "#8b949e"
+    "lineColor": "#8b949e",
+    "xyChart": {
+      "backgroundColor": "transparent",
+      "plotColorPalette": "#818cf8",
+      "titleColor": "#e6edf3",
+      "xAxisLabelColor": "#e6edf3",
+      "xAxisTitleColor": "#e6edf3",
+      "xAxisTickColor": "#8b949e",
+      "xAxisLineColor": "#8b949e",
+      "yAxisLabelColor": "#e6edf3",
+      "yAxisTitleColor": "#e6edf3",
+      "yAxisTickColor": "#8b949e",
+      "yAxisLineColor": "#8b949e"
+    }
   }
 }

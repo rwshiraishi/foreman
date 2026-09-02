@@ -1,0 +1,14 @@
+flowchart TD
+    SETUP["BOSS sets up<br/>discover models<br/>write constitution<br/>spec check<br/>task cards"]
+    W["WORKERS build<br/>cheap tier<br/>report a claim,<br/>never a fact"]
+    C["CHECKERS execute<br/>build · test<br/>render · mutate<br/>the suite"]
+    V{PASS?}
+    R["RETRY with<br/>specific feedback<br/>1 same worker<br/>2 fresh spawn<br/>3 escalate once"]
+    S["SKEPTIC attacks<br/>the whole<br/>boss-owned files first<br/>tree frozen"]
+    F{breaks?}
+    RT["RETRO<br/>cost report<br/>lessons ledger<br/>lint · commit"]
+    SETUP --> W --> C --> V
+    V -- "FAIL" --> R --> W
+    V -- "all PASS" --> S --> F
+    F -- "yes" --> R
+    F -- "none" --> RT

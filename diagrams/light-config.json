@@ -1,0 +1,7 @@
+{
+  "theme": "default",
+  "themeVariables": {
+    "fontFamily": "arial",
+    "xyChart": { "backgroundColor": "transparent", "plotColorPalette": "#6366f1" }
+  }
+}

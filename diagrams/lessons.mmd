@@ -1,0 +1,11 @@
+flowchart TD
+    RUN["Run retro<br/>mandatory, every run"]
+    UNA["UNANSWERED<br/>until a run settles it"]
+    CAND["CANDIDATE<br/>seen once"]
+    PROM["PROMOTED<br/>lands in a skill file<br/>date-stamped · lint-gated"]
+    DEM["DEMOTED<br/>counter-evidence kept"]
+    RUN -- "new lesson" --> CAND
+    RUN -- "open question" --> UNA
+    UNA -- "settled" --> CAND
+    CAND -- "confirmed twice or airtight" --> PROM
+    PROM -- "contradicted later" --> DEM
