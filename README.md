@@ -296,7 +296,7 @@ The org-chart-plus-verification framing was popularized in a widely shared demon
 
 ## Maintainer
 
-Foreman is built and maintained by [Neon Peach, LLC](https://neonpeach.co). Bug reports, field retros, and pull requests are welcome here on GitHub.
+Foreman is built and maintained by [Neon Peach, LLC](https://neonpeach.co). Author: [Ray Shiraishi, Ph.D.](https://www.linkedin.com/in/ray-w-shiraishi-ph-d-780276331) Bug reports, field retros, and pull requests are welcome here on GitHub.
 
 ## License
 
